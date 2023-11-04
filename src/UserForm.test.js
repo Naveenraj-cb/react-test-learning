@@ -19,7 +19,9 @@ test("it calls onUserAdd with name and email on submit", async () => {
   render(<UserForm onUserAdd={mock} />);
 
   // fill inputs
-  const [nameInput, emailInput] = screen.getAllByRole("textbox");
+  const nameInput = screen.getByRole("textbox", { name: /name/i });
+  const emailInput = screen.getByRole("textbox", { name: /email/i });
+
   await user.click(nameInput);
   await user.keyboard("John Doe");
 
