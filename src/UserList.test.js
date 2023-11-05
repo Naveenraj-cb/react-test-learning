@@ -1,13 +1,21 @@
 import { render, screen, within } from "@testing-library/react";
 import UserList from "./UserList";
 
-test("render one row for each user", async () => {
+function renderComponent() {
   const users = [
     { name: "John", email: "john@gmail.com" },
     { name: "Dav", email: "dav@gmail.com" },
   ];
 
   render(<UserList users={users} />);
+
+  return {
+    users,
+  };
+}
+
+test("render one row for each user", async () => {
+  renderComponent();
 
   const rows = within(screen.getByTestId("users-list")).getAllByRole("row");
 
@@ -15,12 +23,7 @@ test("render one row for each user", async () => {
 });
 
 test("render email and name of each user", async () => {
-  const users = [
-    { name: "John", email: "john@gmail.com" },
-    { name: "Dav", email: "dav@gmail.com" },
-  ];
-
-  render(<UserList users={users} />);
+  const { users } = renderComponent();
 
   for (const user of users) {
     const name = screen.getByRole("cell", { name: user.name });
